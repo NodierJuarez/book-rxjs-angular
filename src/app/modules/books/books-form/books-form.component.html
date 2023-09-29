@@ -1,0 +1,50 @@
+<div class="container">
+    <h1>Books</h1>
+    <span>Add new book</span>
+
+
+</div>
+<div class="container my-3">
+    <div class="d-flex justify-content-start ">
+        <button (click)="goToBack()" mat-fab extended color="warn" aria-label="New book">
+            <mat-icon>arrow_back</mat-icon>
+            Return
+        </button>
+    </div>
+</div>
+<div class="container">
+    <form [formGroup]="bookForm">
+
+        <div class="my-2">
+            <mat-form-field class="w-50" appearance="outline">
+                <mat-label>Title</mat-label>
+                <input matInput placeholder="Title" formControlName="title">
+                <mat-error *ngIf="bookForm.get('title')?.hasError('required')"> Title is required.</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="my-2">
+            <mat-form-field class="w-50" appearance="outline">
+                <mat-label>Author</mat-label>
+                <input matInput placeholder="Author" formControlName="author">
+                <mat-error *ngIf="bookForm.get('author')?.hasError('required')">Author is required.</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="my-2">
+            <mat-form-field appearance="outline" class="w-50">
+                <mat-label>Published Date</mat-label>
+                <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" formControlName="publishedDate" >
+                <mat-error *ngIf="bookForm.get('publishedDate')?.hasError('required')">Published date is required.</mat-error>
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker">
+                    <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+        <button *ngIf="!onProgressSave" (click)="saveBook()" class="my-2" mat-raised-button color="primary" type="submit" [disabled]="!bookForm.valid">Save</button>
+        <mat-progress-bar *ngIf="onProgressSave" mode="indeterminate"></mat-progress-bar>
+    </form>
+</div>
